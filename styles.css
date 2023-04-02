@@ -1,0 +1,101 @@
+
+/** GENERAL **/
+
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    font-size: 36px; /* adjust size as needed */
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #333; /* adjust color as needed */
+    margin-top: 50px; /* add margin for spacing from top */
+    margin-bottom: 30px; /* add margin for spacing from bottom */
+  }
+
+.row {
+    margin: 0 0px;
+}
+
+.col {
+    padding: 0 0px;
+    margin-bottom: 20px;
+}
+  
+  .container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+
+
+/** FORM **/
+form {
+    justify-content: center;
+    margin: 0 auto;
+    width: 100%;
+  }
+  
+  label {
+    margin-bottom: 0px;
+    text-align: center;
+  }
+  
+  input[type="range"] {
+    width: 70%;
+  }
+  
+  input[type="submit"] {
+    margin-top: 40px;
+    margin-bottom: 20px;
+  }
+  
+  select {
+    width: 80%;
+    margin-bottom: 0px;
+  }
+
+  .slider-title {
+    font-weight: bold;
+  }
+
+
+
+
+/*** GRAPHS ***/
+
+.graph-warning {
+    display: none;
+  }
+
+
+/* edit so that when we are on mobile, the graphs do not show */
+@media (max-width: 580px) {
+    .graph {
+      display: none;
+    }
+
+    .graph-warning {
+        display: contents;
+        max-width: 70%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        margin-left: 10px;
+      }
+    
+
+  }
+
+
+  /*** RESULTS ***/
+  .result {
+    font-size: 0.8em;
+    margin: 0 10px;
+    font-weight: bold;
+  }
