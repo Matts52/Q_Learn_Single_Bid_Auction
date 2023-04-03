@@ -84,9 +84,6 @@ form {
 
 /* edit so that when we are on mobile, the graphs do not show */
 @media (max-width: 580px) {
-    .graph {
-      display: none;
-    }
 
     .graph-warning {
         display: contents;

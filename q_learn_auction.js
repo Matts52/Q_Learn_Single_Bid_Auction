@@ -73,6 +73,12 @@ function simulate_game(agent_bid, other_bid, value, game){
 //plot a histogram
 function plot_hist(data, html_id, x_axis, y_axis, title){
     
+    if (window.innerWidth <= 580){
+        width = 0.9
+    } else {
+        width = 0.6
+    }
+
     var trace = {
         x: data,
         type: 'histogram',
@@ -83,8 +89,8 @@ function plot_hist(data, html_id, x_axis, y_axis, title){
         title: title,
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
-        width: window.innerWidth * 0.35,
-        height: window.innerHeight * 0.35
+        width: window.innerWidth * width,
+        height: window.innerHeight * 0.5
     };
 
     Plotly.newPlot(html_id, data, layout);
@@ -93,6 +99,14 @@ function plot_hist(data, html_id, x_axis, y_axis, title){
 
 //plot a stp function
 function plot_step(x, y, html_id, x_axis, y_axis, title){
+    
+    if (window.innerWidth <= 580){
+        width = 0.9
+    } else {
+        width = 0.6
+    }
+
+
     var trace = {
         x: x,
         y: y,
@@ -108,8 +122,8 @@ function plot_step(x, y, html_id, x_axis, y_axis, title){
         title: title,
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
-        width: window.innerWidth * 0.33,
-        height: window.innerHeight * 0.35
+        width: window.innerWidth * width,
+        height: window.innerHeight * 0.5
     };
 
     var data = [trace];
@@ -118,6 +132,12 @@ function plot_step(x, y, html_id, x_axis, y_axis, title){
 
 //plot a dual histogram
 function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_axis, title){
+
+    if (window.innerWidth <= 580){
+        width = 0.9
+    } else {
+        width = 0.6
+    }
 
     var trace1 = {
         x: data1,
@@ -137,8 +157,8 @@ function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_ax
         title: title,
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
-        width: window.innerWidth * 0.33,
-        height: window.innerHeight * 0.35
+        width: window.innerWidth * width,
+        height: window.innerHeight * 0.5
     };
 
     Plotly.newPlot(html_id, data, layout);
