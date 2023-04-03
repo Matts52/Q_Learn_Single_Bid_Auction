@@ -70,14 +70,17 @@ function simulate_game(agent_bid, other_bid, value, game){
 
 
 /*** PLOTTING FUNCTIONS ***/
+function determine_width(){
+    if (window.innerWidth <= 580){
+        return 0.9
+    } else {
+        return 0.6
+    }
+}
+
+
 //plot a histogram
 function plot_hist(data, html_id, x_axis, y_axis, title){
-    
-    if (window.innerWidth <= 580){
-        width = 0.9
-    } else {
-        width = 0.6
-    }
 
     var trace = {
         x: data,
@@ -89,7 +92,7 @@ function plot_hist(data, html_id, x_axis, y_axis, title){
         title: title,
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
-        width: window.innerWidth * width,
+        width: window.innerWidth * determine_width(),
         height: window.innerHeight * 0.5
     };
 
@@ -99,13 +102,6 @@ function plot_hist(data, html_id, x_axis, y_axis, title){
 
 //plot a stp function
 function plot_step(x, y, html_id, x_axis, y_axis, title){
-    
-    if (window.innerWidth <= 580){
-        width = 0.9
-    } else {
-        width = 0.6
-    }
-
 
     var trace = {
         x: x,
@@ -122,7 +118,7 @@ function plot_step(x, y, html_id, x_axis, y_axis, title){
         title: title,
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
-        width: window.innerWidth * width,
+        width: window.innerWidth * determine_width(),
         height: window.innerHeight * 0.5
     };
 
@@ -132,12 +128,6 @@ function plot_step(x, y, html_id, x_axis, y_axis, title){
 
 //plot a dual histogram
 function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_axis, title){
-
-    if (window.innerWidth <= 580){
-        width = 0.9
-    } else {
-        width = 0.6
-    }
 
     var trace1 = {
         x: data1,
@@ -157,7 +147,7 @@ function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_ax
         title: title,
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
-        width: window.innerWidth * width,
+        width: window.innerWidth * determine_width(),
         height: window.innerHeight * 0.5
     };
 
@@ -167,6 +157,26 @@ function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_ax
 
 
 /*** MAIN ALGORITHM ***/
+
+function determine_action(Q, state, action_space, eps){
+    if (Math.random() < eps) {
+        return action_space[Math.floor(Math.random() * action_space.length)];
+      } else {
+        return Q[state].indexOf(Math.max(...Q[state]));
+      }
+}
+
+function console_output(opt_choice, mean_winnings, mean_utility, normed_out){
+    // Print the final Q-table
+    console.log("Optimal Choice: ", opt_choice);
+    console.log("Mean Winnings: ", mean_winnings);
+    console.log("Mean Utility: ", mean_utility);
+    console.log("Normalized Q-table: ");
+    normed_out.forEach((value, index) => console.log(" Key:", index, "Value:", value));
+}
+
+
+
 
 /*** Allow the agent to apply the Q-Learning algorithm ***/
 function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_func, value_func, game, num_rounds, results=false) {
@@ -191,12 +201,7 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
     for (let i = 0; i < num_rounds; i++) {
   
       // Choose an action based on actor policy and epsilon-greedy exploration
-      let action;
-      if (Math.random() < epsilon) {
-        action = action_space[Math.floor(Math.random() * action_space.length)];
-      } else {
-        action = Q[state].indexOf(Math.max(...Q[state]));
-      }
+      let action = determine_action(Q, state, action_space, epsilon);
   
       // generate the other player's move based on the inputted function
       const other_action = other_player_func();
@@ -209,7 +214,7 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
       rewards.push(reward);
   
       // calculate the agent utility as the maximization parameter
-      const utility = agent_utility_func(reward);
+      utility = agent_utility_func(reward);
       utilities.push(utility);
 
       // record the actions
@@ -233,14 +238,7 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
     const opt_choice = Q[0].indexOf(Math.max(...Q[0]));
   
     //debugging information
-    if (results) {
-      // Print the final Q-table
-      console.log("Optimal Choice: ", opt_choice);
-      console.log("Mean Winnings: ", mean_winnings);
-      console.log("Mean Utility: ", mean_utility);
-      console.log("Normalized Q-table: ");
-      normed_out.forEach((value, index) => console.log(" Key:", index, "Value:", value));
-    }
+    if (results) { console_output(opt_choice, mean_winnings, mean_utility, normed_out)}
   
     //update the outputted results
     document.getElementById("averageWin").textContent = "Average Winnings: " + mean_winnings.toFixed(2);

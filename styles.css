@@ -82,21 +82,6 @@ form {
   }
 
 
-/* edit so that when we are on mobile, the graphs do not show */
-@media (max-width: 580px) {
-
-    .graph-warning {
-        display: contents;
-        max-width: 70%;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        margin-left: 10px;
-      }
-    
-
-  }
-
-
   /*** RESULTS ***/
   .result {
     font-size: 0.8em;
