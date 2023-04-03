@@ -11,7 +11,7 @@ function randn() {
     return z;
   }
 
-
+//random normal distribution for the value of the item being bid on
 function value_rand_norm(mu, sigma) {
     function inner_func() {
         return Math.min(Math.max(Math.round(randn() * sigma + mu), 0), 10);
@@ -19,6 +19,8 @@ function value_rand_norm(mu, sigma) {
     return inner_func;
 }
 
+
+//random normal distribution for the other players bid
 function other_player_rand_norm(mu, sigma) {
     function inner_func() {
         return Math.min(Math.max(Math.round(randn() * sigma + mu), 0), 10);
@@ -27,7 +29,7 @@ function other_player_rand_norm(mu, sigma) {
 }
 
 /*** Agent Utility Function */
-
+//our agent's simple utility function
 function basic_agent_utility(risk_aversion=1.0, risk_loving=1.0) {
     function inner_func(reward) {
         if (reward < 0) {
@@ -41,7 +43,7 @@ function basic_agent_utility(risk_aversion=1.0, risk_loving=1.0) {
 
 
 /*** GAME SIMULATION ***/
-
+//simulate one round of the game
 function simulate_game(agent_bid, other_bid, value, game){
     //decide the payouts based on game type
     if (game == "traditional"){
@@ -68,7 +70,7 @@ function simulate_game(agent_bid, other_bid, value, game){
 
 
 /*** PLOTTING FUNCTIONS ***/
-
+//plot a histogram
 function plot_hist(data, html_id, x_axis, y_axis, title){
     
     var trace = {
@@ -89,8 +91,7 @@ function plot_hist(data, html_id, x_axis, y_axis, title){
 
 }
 
-
-
+//plot a stp function
 function plot_step(x, y, html_id, x_axis, y_axis, title){
     var trace = {
         x: x,
@@ -115,7 +116,7 @@ function plot_step(x, y, html_id, x_axis, y_axis, title){
     Plotly.newPlot(html_id, data, layout);
 }
 
-
+//plot a dual histogram
 function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_axis, title){
 
     var trace1 = {
@@ -145,9 +146,9 @@ function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_ax
 
 
 
+/*** MAIN ALGORITHM ***/
 
 /*** Allow the agent to apply the Q-Learning algorithm ***/
-
 function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_func, value_func, game, num_rounds, results=false) {
 
     // Define the action space
@@ -157,7 +158,7 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
     const Q = Array.from(Array(1), () => new Array(action_space.length).fill(0));
   
     let state = 0;
-    let next_state = 0; // since we only have a starting bid of zero each time, always 0
+    let next_state = 0; // since we only have a starting bid of zero each time, always 0 [one state]
   
     const rewards = [];
     const utilities = [];
@@ -205,10 +206,13 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
     // normalize our Q parameter
     const np_Q = Q[0];
     const normed_out = np_Q.map(x => x / Math.sqrt(np_Q.reduce((a, b) => a + b * b, 0)));
+
+    //find expected winnings/utility as well as the optimal choice dictated by our q-learning algorithm
     const mean_winnings = rewards.reduce((a, b) => a + b, 0) / rewards.length;
     const mean_utility = utilities.reduce((a, b) => a + b, 0) / utilities.length;
     const opt_choice = Q[0].indexOf(Math.max(...Q[0]));
   
+    //debugging information
     if (results) {
       // Print the final Q-table
       console.log("Optimal Choice: ", opt_choice);
@@ -229,6 +233,7 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
     plot_step(action_space, normed_out, "myStep", "Agent Bid", "L1 Normalized Q-value", "Q-table Values for Bids");
     plot_two_histograms(agent_bids, other_bids, "myDoubleHist", "Agent Bids", "Other Bids", "Bid", "Count", "Agent vs. Other Bid")
 
+    //return the relevant information in the case that we want to do things with this in the future (ex. find the distribution of mean winnings)
     return [mean_winnings, mean_utility, normed_out, opt_choice];
   }
 
@@ -236,6 +241,7 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
 
 /*** MAIN PROGRAM ***/
 
+//listener on the simulation button
 document.querySelector('form').addEventListener('submit', (event) => {
     event.preventDefault();
 
@@ -269,7 +275,6 @@ document.querySelector('form').addEventListener('submit', (event) => {
 
 
 /*** SLIDER LISTENERS ***/
-
 
 // Get references to all the range inputs
 const alphaInput = document.getElementById('alpha');

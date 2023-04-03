@@ -14,9 +14,16 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #333; /* adjust color as needed */
-    margin-top: 50px; /* add margin for spacing from top */
-    margin-bottom: 30px; /* add margin for spacing from bottom */
+    margin-top: 5px; /* add margin for spacing from top */
+    margin-bottom: 5px; /* add margin for spacing from bottom */
   }
+
+  h4 {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+  }
+
 
 .row {
     margin: 0 0px;
