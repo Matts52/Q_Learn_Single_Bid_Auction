@@ -93,7 +93,7 @@ function plot_hist(data, html_id, x_axis, y_axis, title){
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
         width: window.innerWidth * determine_width(),
-        height: window.innerHeight * 0.5
+        height: window.innerHeight * 0.7
     };
 
     Plotly.newPlot(html_id, data, layout);
@@ -119,7 +119,7 @@ function plot_step(x, y, html_id, x_axis, y_axis, title){
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
         width: window.innerWidth * determine_width(),
-        height: window.innerHeight * 0.5
+        height: window.innerHeight * 0.7
     };
 
     var data = [trace];
@@ -148,7 +148,7 @@ function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_ax
         xaxis: {title: x_axis},
         yaxis: {title: y_axis},
         width: window.innerWidth * determine_width(),
-        height: window.innerHeight * 0.5
+        height: window.innerHeight * 0.7
     };
 
     Plotly.newPlot(html_id, data, layout);
@@ -332,3 +332,26 @@ numRoundsInput.addEventListener('input', () => {numRoundsValue.textContent = num
 
 
 
+
+/*** CHART SELECTION ***/
+// Hide all charts to begin
+var graphs = document.querySelectorAll('.graph');
+for (var i = 0; i < graphs.length; i++) {
+  graphs[i].style.display = 'none';
+}
+
+// Show the first graph
+var firstGraph = document.querySelector('.showFirst');
+firstGraph.style.display = 'block';
+
+// Handle chart selection
+document.addEventListener('DOMContentLoaded', function() {
+  var chartSelect = document.getElementById('chartSelect');
+  chartSelect.addEventListener('change', function() {
+    var selectedChart = chartSelect.value;
+    for (var i = 0; i < graphs.length; i++) {
+      graphs[i].style.display = 'none';
+    }
+    document.getElementById(selectedChart).style.display = 'block';
+  });
+});

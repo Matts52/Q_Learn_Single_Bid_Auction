@@ -10,18 +10,20 @@ body {
 h1 {
     font-size: 36px; /* adjust size as needed */
     font-weight: bold;
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #333; /* adjust color as needed */
     margin-top: 5px; /* add margin for spacing from top */
     margin-bottom: 5px; /* add margin for spacing from bottom */
+    margin-left: 10px;
   }
 
   h4 {
-    text-align: center;
+    text-align: left;
     text-transform: uppercase;
     margin-bottom: 15px;
+    margin-left: 10px;
   }
 
 
@@ -66,6 +68,7 @@ form {
   select {
     width: 80%;
     margin-bottom: 0px;
+    margin-top: 5px;
   }
 
   .slider-title {

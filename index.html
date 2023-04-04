@@ -26,7 +26,7 @@
             	<!-- INPUT FORM -->
                 <form>
 
-                    <label for="game_type">Auction Type:</label>
+                    <label for="game_type"><b>Auction Type:</b></label>
                     <select id="game_type" name="game_type" required>
                       <option value="traditional">Traditional</option>
                       <option value="reverse">Reverse</option>
@@ -112,10 +112,19 @@
                         <p class="result" id="optimalBid"></p>
                         <br>
                     </div>
+
+                    <!-- Seelction Drop-Down -->
+                    <select id="chartSelect">
+                      <option value="myStep">Q-Table Values</option>
+                      <option value="myDoubleHist">Both Agent Histogram</option>
+                      <option value="myHist">Agent Winnings Histogram</option>
+                      <option value="myHist2">Agent Utilities Histogram</option>
+                    </select>
+
                     <!-- Plots -->
                     <div class="row">
                       <div class="col-sm-4">
-                        <div class="graph" id="myStep"></div>
+                        <div class="graph showFirst" id="myStep"></div>
                       </div>
                     </div>
                     <div class="row">
