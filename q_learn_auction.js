@@ -1,6 +1,4 @@
 
-
-
 /*** RANDOMIZATION FUNCTIONS */
 
 //standard random normal
@@ -74,33 +72,65 @@ function determine_width(){
     if (window.innerWidth <= 580){
         return 0.9
     } else {
-        return 0.6
+        return 0.45
+    }
+}
+
+function determine_height(){
+    if (window.innerWidth <= 580){
+        return 0.7
+    } else {
+        return 0.5
+    }
+}
+
+function get_layout(title, x_axis, y_axis){
+    return {
+        title: {
+            text: title,
+            font: {
+                color: '#333' // Set title font color to match theme
+            }
+        },
+        xaxis: {
+            title: {
+                text: x_axis,
+                font: {
+                    color: '#777' // Set x-axis title font color to match theme
+                }
+            }
+        },
+        yaxis: {
+            title: {
+                text: y_axis,
+                font: {
+                    color: '#777' // Set y-axis title font color to match theme
+                }
+            }
+        },
+        width: window.innerWidth * determine_width(),
+        height: window.innerHeight * determine_height()
     }
 }
 
 
-//plot a histogram
+// Plot a histogram
 function plot_hist(data, html_id, x_axis, y_axis, title){
 
     var trace = {
         x: data,
         type: 'histogram',
-      };
+        marker: {
+            color: '#333' // Set histogram bar color to match theme
+        }
+    };
     var data = [trace];
 
-    var layout = {
-        title: title,
-        xaxis: {title: x_axis},
-        yaxis: {title: y_axis},
-        width: window.innerWidth * determine_width(),
-        height: window.innerHeight * 0.7
-    };
-
-    Plotly.newPlot(html_id, data, layout);
+    Plotly.newPlot(html_id, data, get_layout(title, x_axis, y_axis));
 
 }
 
-//plot a stp function
+// Plot a step function
 function plot_step(x, y, html_id, x_axis, y_axis, title){
 
     var trace = {
@@ -109,49 +139,42 @@ function plot_step(x, y, html_id, x_axis, y_axis, title){
         type: 'step',
         mode: 'lines+markers',
         line: {
-            color: 'blue',
+            color: '#333', // Set step line color to match theme
             width: 2
+        },
+        marker: {
+            color: '#333' // Set step marker color to match theme
         }
     };
 
-    var layout = {
-        title: title,
-        xaxis: {title: x_axis},
-        yaxis: {title: y_axis},
-        width: window.innerWidth * determine_width(),
-        height: window.innerHeight * 0.7
-    };
-
     var data = [trace];
-    Plotly.newPlot(html_id, data, layout);
+    Plotly.newPlot(html_id, data, get_layout(title, x_axis, y_axis));
 }
 
-//plot a dual histogram
+// Plot a dual histogram
 function plot_two_histograms(data1, data2, html_id, label1, label2, x_axis, y_axis, title){
 
     var trace1 = {
         x: data1,
         name: label1,
-        type: 'histogram'
+        type: 'histogram',
+        marker: {
+            color: '#333' // Set histogram bar color for trace1 to match theme
+        }
     };
 
     var trace2 = {
         x: data2,
         name: label2,
-        type: 'histogram'
+        type: 'histogram',
+        marker: {
+            color: '#777' // Set histogram bar color for trace2 to match theme
+        }
     };
 
     var data = [trace1, trace2];
 
-    var layout = {
-        title: title,
-        xaxis: {title: x_axis},
-        yaxis: {title: y_axis},
-        width: window.innerWidth * determine_width(),
-        height: window.innerHeight * 0.7
-    };
-
-    Plotly.newPlot(html_id, data, layout);
+    Plotly.newPlot(html_id, data, get_layout(title, x_axis, y_axis));
 }
 
 
@@ -259,8 +282,8 @@ function learn_the_game(alpha, gamma, epsilon, other_player_func, agent_utility_
 
 /*** MAIN PROGRAM ***/
 
-//listener on the simulation button
-document.querySelector('form').addEventListener('submit', (event) => {
+// Define a function that takes in the event object and performs the simulation
+const runSimulation = (event) => {
     event.preventDefault();
 
     //read in all of the user selections
@@ -286,50 +309,28 @@ document.querySelector('form').addEventListener('submit', (event) => {
                            agent_utility_func=agent_func, value_func=value_func,  game=game_to_play, num_rounds=num_rounds, 
                             results=false);
     
-    console.log("Complete");
+    //console.log("Complete");
+};
 
-});
+// Attach the event listeners to the buttons
+document.getElementById('topSubmit').addEventListener('click', runSimulation);
+document.getElementById('bottomSubmit').addEventListener('click', runSimulation);
 
 
 
 /*** SLIDER LISTENERS ***/
 
-// Get references to all the range inputs
-const alphaInput = document.getElementById('alpha');
-const gammaInput = document.getElementById('gamma');
-const epsilonInput = document.getElementById('epsilon');
-const otherMeanInput = document.getElementById('other_mean');
-const otherStdInput = document.getElementById('other_std');
-const riskAversionInput = document.getElementById('risk_aversion');
-const riskLovingInput = document.getElementById('risk_loving');
-const valueMeanInput = document.getElementById('value_mean');
-const valueStdInput = document.getElementById('value_std');
-const numRoundsInput = document.getElementById('num_rounds');
+// Get reference to the parent element of all the range inputs
+const inputsContainer = document.querySelector('form');
 
-// Get references to all the span elements to display the current values
-const alphaValue = document.getElementById('alpha_value');
-const gammaValue = document.getElementById('gamma_value');
-const epsilonValue = document.getElementById('epsilon_value');
-const otherMeanValue = document.getElementById('other_mean_value');
-const otherStdValue = document.getElementById('other_std_value');
-const riskAversionValue = document.getElementById('risk_aversion_value');
-const riskLovingValue = document.getElementById('risk_loving_value');
-const valueMeanValue = document.getElementById('value_mean_value');
-const valueStdValue = document.getElementById('value_std_value');
-const numRoundsValue = document.getElementById('num_rounds_value');
-
-// Add listeners to each range input to update the corresponding span element
-alphaInput.addEventListener('input', () => {alphaValue.textContent = alphaInput.value;});
-gammaInput.addEventListener('input', () => {gammaValue.textContent = gammaInput.value;});
-epsilonInput.addEventListener('input', () => {epsilonValue.textContent = epsilonInput.value;});
-otherMeanInput.addEventListener('input', () => {otherMeanValue.textContent = otherMeanInput.value;});
-otherStdInput.addEventListener('input', () => {otherStdValue.textContent = otherStdInput.value;});
-riskAversionInput.addEventListener('input', () => {riskAversionValue.textContent = riskAversionInput.value;});
-riskLovingInput.addEventListener('input', () => {riskLovingValue.textContent = riskLovingInput.value;});
-valueMeanInput.addEventListener('input', () => {valueMeanValue.textContent = valueMeanInput.value;});
-valueStdInput.addEventListener('input', () => {valueStdValue.textContent = valueStdInput.value;});
-numRoundsInput.addEventListener('input', () => {numRoundsValue.textContent = numRoundsInput.value;});
-
+// Add listener to the parent element to handle input events from all range inputs
+inputsContainer.addEventListener('input', (event) => {
+  const target = event.target;
+  const span = document.getElementById(target.id + '_value'); // Get corresponding span element
+  if (span) {
+    span.textContent = target.value; // Update the span element with the current value
+  }
+});
 
 
 

@@ -17,11 +17,10 @@
 </head>
 <body>
     <h1>Single Sealed Bid Q-learning Algorithm</h1>
-    <h4>Find the documentation and user-guide <a href="https://github.com/Matts52/Q_Learn_Single_Bid_Auction">here</a></h4>
 
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-2">
+			<div class="col-sm-2 sliderRow">
 
             	<!-- INPUT FORM -->
                 <form>
@@ -60,7 +59,9 @@
                     <br><br>
             
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-2 sliderRow">
+
+                   <input id="topSubmit" type="submit" value="Simulate"> 
 
                     <p class="slider-title">Agent Parameters:</p>
 
@@ -98,9 +99,9 @@
                     <input type="range" id="value_std" name="value_std" step="0.1" min="0" max="10" value="1.0" required>
                     <span id="value_std_value">1.0</span>
 
-                    
-                    <input type="submit" value="Simulate"> 
                   </form>
+
+                  <input id="bottomSubmit" type="submit" value="Simulate"> 
                   
                 </div>    
               
@@ -145,6 +146,10 @@
                 </div>
             </div>
         </div>
+
+        <h4>Find the documentation and user-guide <a href="https://github.com/Matts52/Q_Learn_Single_Bid_Auction">here</a></h4>
+
+        <footer>Site optimized for desktop viewing</footer>
 
 
 	<!-- Link to jQuery and Bootstrap scripts -->
