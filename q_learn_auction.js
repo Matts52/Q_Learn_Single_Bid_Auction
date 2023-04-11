@@ -320,16 +320,15 @@ document.getElementById('bottomSubmit').addEventListener('click', runSimulation)
 
 /*** SLIDER LISTENERS ***/
 
-// Get reference to the parent element of all the range inputs
-const inputsContainer = document.querySelector('form');
+const sliderNames = ["num_rounds", "alpha", "gamma", "epsilon", "risk_aversion", "risk_loving", "other_mean", "other_std", "value_mean"];
 
-// Add listener to the parent element to handle input events from all range inputs
-inputsContainer.addEventListener('input', (event) => {
-  const target = event.target;
-  const span = document.getElementById(target.id + '_value'); // Get corresponding span element
-  if (span) {
-    span.textContent = target.value; // Update the span element with the current value
-  }
+sliderNames.forEach(sliderName => {
+    const slider = document.getElementById(sliderName);
+    const sliderValue = document.getElementById(`${sliderName}_value`);
+    slider.addEventListener("input", function() {
+        sliderValue.textContent = this.value;
+    });
+    sliderValue.textContent = slider.value; // Set initial slider value
 });
 
 
