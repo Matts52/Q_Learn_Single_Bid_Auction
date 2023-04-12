@@ -320,7 +320,7 @@ document.getElementById('bottomSubmit').addEventListener('click', runSimulation)
 
 /*** SLIDER LISTENERS ***/
 
-const sliderNames = ["num_rounds", "alpha", "gamma", "epsilon", "risk_aversion", "risk_loving", "other_mean", "other_std", "value_mean"];
+const sliderNames = ["num_rounds", "alpha", "gamma", "epsilon", "risk_aversion", "risk_loving", "other_mean", "other_std", "value_mean", "value_std"];
 
 sliderNames.forEach(sliderName => {
     const slider = document.getElementById(sliderName);
