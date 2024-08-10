@@ -1,163 +1,167 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>Q Learn Auction</title>
-	<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=1, user-scalable=0">
-    
+  <title>Q Learn Auction</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0, maximum-scale=1, user-scalable=0">
 
-	<!-- Link to Bootstrap stylesheet -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    <!-- Styles -->
-    <link rel="stylesheet" type="text/css" href="styles.css">
+  <!-- Link to Bootstrap stylesheet -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    <!-- Load plotly.js into the DOM -->
-	<script src='https://cdn.plot.ly/plotly-2.20.0.min.js'></script>
+  <!-- Styles -->
+  <link rel="stylesheet" type="text/css" href="styles.css">
+
+  <!-- Load plotly.js into the DOM -->
+  <script src='https://cdn.plot.ly/plotly-2.20.0.min.js'></script>
 </head>
+
 <body>
-    <h1>Single Sealed Bid Q-learning Algorithm</h1>
+  <h1>Single Sealed Bid Q-learning Algorithm</h1>
 
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-2 sliderRow">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2 sliderRow">
 
-            	<!-- INPUT FORM -->
-                <form>
+        <!-- INPUT FORM -->
+        <form>
 
-                    <label for="game_type"><b>Auction Type:</b></label>
-                    <select id="game_type" name="game_type" required>
-                      <option value="traditional">Traditional</option>
-                      <option value="reverse">Reverse</option>
-                      <option value="traditional loser pays">Loser Pays</option>
-                    </select><br><br>
+          <label for="game_type"><b>Auction Type:</b></label>
+          <select id="game_type" name="game_type" required>
+            <option value="traditional">Traditional</option>
+            <option value="reverse">Reverse</option>
+            <option value="traditional loser pays">Loser Pays</option>
+          </select><br><br>
 
-                    <p class="slider-title">Algorithm Parameters:</p>
-                
-                    <label for="num_rounds">Rounds:</label>
-                    <input type="range" id="num_rounds" name="num_rounds" min="2" max="100000" step="1" value="10000" required>
-                    <span id="num_rounds_value">10000</span>    
-                
-                    <br><br>
-                
-                    <label for="alpha">Alpha:</label>
-                    <input type="range" id="alpha" name="alpha" step="0.01" min="0" max="1" value="0.80" required>
-                    <span id="alpha_value">0.8</span>
-                
-                    <br><br>
-                
-                    <label for="gamma">Gamma:</label>
-                    <input type="range" id="gamma" name="gamma" step="0.01" min="0" max="1" value="0.50" required>
-                    <span id="gamma_value">0.5</span>
-                
-                    <br><br>
-                
-                    <label for="epsilon">Epsilon:</label>
-                    <input type="range" id="epsilon" name="epsilon" step="0.01" min="0" max="1" value="0.30" required>
-                    <span id="epsilon_value">0.3</span>
-                
-                    <br><br>
-            
-                </div>
-                <div class="col-sm-2 sliderRow">
+          <p class="slider-title">Algorithm Parameters:</p>
 
-                   <input id="topSubmit" type="submit" value="Simulate"> 
+          <label for="num_rounds">Rounds:</label>
+          <input type="range" id="num_rounds" name="num_rounds" min="2" max="100000" step="1" value="10000" required>
+          <span id="num_rounds_value">10000</span>
 
-                    <p class="slider-title">Agent Parameters:</p>
+          <br><br>
 
-                    <label for="risk_aversion">Risk Aversion:</label>
-                    <input type="range" id="risk_aversion" name="risk_aversion" step="0.1" min="0" max="10" value="1.0" required>
-                    <span id="risk_aversion_value">1.0</span>
-                
-                    <br><br>
-                
-                    <label for="risk_loving">Risk Loving:</label>
-                    <input type="range" id="risk_loving" name="risk_loving" step="0.1" min="0" max="10" value="1.0" required>
-                    <span id="risk_loving_value">1.0</span>
-                
-                    <br><br>
+          <label for="alpha">Alpha:</label>
+          <input type="range" id="alpha" name="alpha" step="0.01" min="0" max="1" value="0.80" required>
+          <span id="alpha_value">0.8</span>
 
-                    <label for="other_mean">Other Mean:</label>
-                    <input type="range" id="other_mean" name="other_mean" step="0.1" min="0" max="10" value="6.0" required>
-                    <span id="other_mean_value">6.0</span>
+          <br><br>
 
-                    <br><br>
+          <label for="gamma">Gamma:</label>
+          <input type="range" id="gamma" name="gamma" step="0.01" min="0" max="1" value="0.50" required>
+          <span id="gamma_value">0.5</span>
 
-                    <label for="other_std">Other Std:</label>
-                    <input type="range" id="other_std" name="other_std" step="0.1" min="0" max="10" value="1.0" required>
-                    <span id="other_std_value">1.0</span>
-                
-                    <br><br>
-                
-                    <label for="value_mean">Value Mean:</label>
-                    <input type="range" id="value_mean" name="value_mean" step="0.1" min="0" max="10" value="8.0" required>
-                    <span id="value_mean_value">8.0</span>
-                
-                    <br><br>
-                
-                    <label for="value_std">Value Std:</label>
-                    <input type="range" id="value_std" name="value_std" step="0.1" min="0" max="10" value="1.0" required>
-                    <span id="value_std_value">1.0</span>
+          <br><br>
 
-                  </form>
+          <label for="epsilon">Epsilon:</label>
+          <input type="range" id="epsilon" name="epsilon" step="0.01" min="0" max="1" value="0.30" required>
+          <span id="epsilon_value">0.3</span>
 
-                  <input id="bottomSubmit" type="submit" value="Simulate"> 
-                  
-                </div>    
-              
-                <div class="col-sm-8 graphs">
-                    <!-- Results -->
-                    <div class="row">
-                        <p class="result" id="averageWin"></p>
-                        <p class="result" id="averageUtil"></p>
-                        <p class="result" id="optimalBid"></p>
-                        <br>
-                    </div>
+          <br><br>
 
-                    <!-- Selction Drop-Down -->
-                    <select id="chartSelect">
-                      <option value="myDoubleHist">Both Agent Histogram</option>
-                      <option value="myStep">Q-Table Values</option>
-                      <option value="myHist">Agent Winnings Histogram</option>
-                      <option value="myHist2">Agent Utilities Histogram</option>
-                    </select>
+      </div>
+      <div class="col-sm-2 sliderRow">
 
-                    <!-- Plots -->
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <div class="graph" id="myStep"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-4">
-                        <div class="graph showFirst" id="myDoubleHist"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-4 w-50">
-                        <div class="graph" id="myHist"></div>
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-sm-4 w-50">
-                        <div class="graph" id="myHist2"></div>
-                      </div>
-                    </div>
-                </div>
-            </div>
+        <input id="topSubmit" type="submit" value="Simulate">
+
+        <p class="slider-title">Agent Parameters:</p>
+
+        <label for="risk_aversion">Risk Aversion:</label>
+        <input type="range" id="risk_aversion" name="risk_aversion" step="0.1" min="0" max="10" value="1.0" required>
+        <span id="risk_aversion_value">1.0</span>
+
+        <br><br>
+
+        <label for="risk_loving">Risk Loving:</label>
+        <input type="range" id="risk_loving" name="risk_loving" step="0.1" min="0" max="10" value="1.0" required>
+        <span id="risk_loving_value">1.0</span>
+
+        <br><br>
+
+        <label for="other_mean">Other Mean:</label>
+        <input type="range" id="other_mean" name="other_mean" step="0.1" min="0" max="10" value="6.0" required>
+        <span id="other_mean_value">6.0</span>
+
+        <br><br>
+
+        <label for="other_std">Other Std:</label>
+        <input type="range" id="other_std" name="other_std" step="0.1" min="0" max="10" value="1.0" required>
+        <span id="other_std_value">1.0</span>
+
+        <br><br>
+
+        <label for="value_mean">Value Mean:</label>
+        <input type="range" id="value_mean" name="value_mean" step="0.1" min="0" max="10" value="8.0" required>
+        <span id="value_mean_value">8.0</span>
+
+        <br><br>
+
+        <label for="value_std">Value Std:</label>
+        <input type="range" id="value_std" name="value_std" step="0.1" min="0" max="10" value="1.0" required>
+        <span id="value_std_value">1.0</span>
+
+        </form>
+
+        <input id="bottomSubmit" type="submit" value="Simulate">
+
+      </div>
+
+      <div class="col-sm-8 graphs">
+        <!-- Results -->
+        <div class="row">
+          <p class="result" id="averageWin"></p>
+          <p class="result" id="averageUtil"></p>
+          <p class="result" id="optimalBid"></p>
+          <br>
         </div>
 
-        <h4>Find the documentation and user-guide <a href="https://github.com/Matts52/Q_Learn_Single_Bid_Auction">here</a></h4>
+        <!-- Selction Drop-Down -->
+        <select id="chartSelect">
+          <option value="myDoubleHist">Both Agent Histogram</option>
+          <option value="myStep">Q-Table Values</option>
+          <option value="myHist">Agent Winnings Histogram</option>
+          <option value="myHist2">Agent Utilities Histogram</option>
+        </select>
 
-        <footer>Site optimized for desktop viewing</footer>
+        <!-- Plots -->
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="graph" id="myStep"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="graph showFirst" id="myDoubleHist"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 w-50">
+            <div class="graph" id="myHist"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 w-50">
+            <div class="graph" id="myHist2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>Find the documentation and user-guide <a href="https://github.com/Matts52/Q_Learn_Single_Bid_Auction">here</a>
+  </h4>
+
+  <footer>Site optimized for desktop viewing</footer>
 
 
-	<!-- Link to jQuery and Bootstrap scripts -->
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-	
-    <!-- Simulation Script -->
-	<script src="q_learn_auction.js"></script>
+  <!-- Link to jQuery and Bootstrap scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <!-- Simulation Script -->
+  <script src="q_learn_auction.js"></script>
 </body>
+
 </html>
